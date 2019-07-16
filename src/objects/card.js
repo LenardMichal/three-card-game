@@ -40,7 +40,19 @@ class Card extends Phaser.GameObjects.Sprite{
         super.scale = 0.25;
         scene.add.existing(this);
         this.cardColor = color;
-        this.cardHidden = false;    
+        this.cardHidden = false;   
+        //setup event emiter for click
+        this.setInteractive()
+
+        this.on('pointerdown', function(pointer){
+           if(this.cardColor == "red"){
+               console.log('U won');
+            }else{
+                console.log('U lose');    
+            }
+
+            scene.events.emit('checkCards');
+        })
     }
     
 
