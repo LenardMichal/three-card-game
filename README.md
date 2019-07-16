@@ -1,4 +1,4 @@
-#Game based on Photonstorm boilerplate
+# Game based on Photonstorm boilerplate
 
 ```
 https://github.com/photonstorm/phaser3-project-template
