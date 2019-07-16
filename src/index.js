@@ -1,5 +1,7 @@
 import Phaser from "phaser";
-import logoImg from "./assets/logo.png";
+import cardsUrl from "./assets/sprites.xml";
+import cardsImg from './assets/sprites.png';
+import Card from './objects/card';
 
 const config = {
   type: Phaser.AUTO,
@@ -8,25 +10,30 @@ const config = {
   height: 600,
   scene: {
     preload: preload,
-    create: create
+    create, 
+    update
+    
   }
 };
 
 const game = new Phaser.Game(config);
 
 function preload() {
-  this.load.image("logo", logoImg);
+  this.load.atlasXML('cards', cardsImg, cardsUrl);
+}
+let card
+function create(){
+ card =  new Card(this,0, 'black');
+ let card2 = new Card(this, 1, 'black');
+ let card3 = new Card(this, 2, 'red');
+//  card.flipCard();
+//  card.setFrame(1);
+console.log(game.canvas);
+
 }
 
-function create() {
-  const logo = this.add.image(400, 150, "logo");
 
-  this.tweens.add({
-    targets: logo,
-    y: 450,
-    duration: 2000,
-    ease: "Power2",
-    yoyo: true,
-    loop: -1
-  });
+function update(){
+  
 }
+
