@@ -23,7 +23,7 @@ function preload() {
 }
 
 
-
+//Variables for wider scope
 let card, card2, card3;
 
 function create(){
@@ -37,9 +37,22 @@ function create(){
 
 console.log(COORDINATES);
 
-flipCard(this);
-this.events.on('checkCards', () => flipCard(this));
-shuffleBot(this);
+// flipCard(this);
+// shuffleBot(this);
+
+ //Event emiited from Card object
+  this.events.on('checkCards', () => {
+    flipCard(this);
+    shuffleBot(this);
+  });
+  let mockTween = this.tweens.create({
+    targets: [card, card2, card3],
+    y: 50,
+  })
+  card.flip(0)
+  // card2.shuffle(0)
+  // card3.shuffle(0)
+
 
 }
 
@@ -51,30 +64,32 @@ function update(){
 function shuffleBot(scene){
 
   let iteration = 0;
-
+  let animDuration = 500;
   //Function that perform one shuffle and call next request
   function shuffle(scene, card, far){
-    let shuffleTween = scene.tweens.add({
+    return scene.tweens.add({
       targets: card,
       x: far,
       loop: 0,
       onComplete: shuffleHandler,
-      duration: 500,
+      duration: animDuration,
+     
     })
   }
 
   function shuffleClean(scene, card, far){
-    let shuffleTween = scene.tweens.add({
+    return scene.tweens.add({
       targets: card,
       x: far,
       loop: 0,
-      duration: 500,
+      duration: animDuration,
+      
     })
   }
 
   function shuffleHandler(){
     //Breaker for endless loop
-    if (iteration > 50){
+    if (iteration > 500){
       return null;
     }
     let random = Math.random();
