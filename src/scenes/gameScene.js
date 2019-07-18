@@ -4,7 +4,7 @@ import Card from '../objects/card';
 class GameScene extends Phaser.Scene {
     constructor(){
         super('gameScene')
-        console.log('zyje gameScene')
+        
     }
 //custom functions
 
@@ -12,8 +12,8 @@ class GameScene extends Phaser.Scene {
  
 //**  Start of lifecycles  **/
  create(){
-
-//   this.add.text(0, 0, 'Three Card Game Alpha')
+    const CANVAS_WIDTH = this.game.canvas.width;
+    const CANVAS_HEIGHT = this.game.canvas.height;
 
 
  this.card =  new Card(this,0, 'black');
@@ -24,15 +24,27 @@ class GameScene extends Phaser.Scene {
   this.card2.flip(); 
   this.card3.flip(); 
 
+    this.shuffles = 30;
+    this.duration = 500;
+
+  this.shuffleCards(this, this.shuffles, this.duration, [this.card, this.card2, this.card3]);
 
 
-  this.shuffleCards(this, 30, 150, [this.card, this.card2, this.card3]);
+//  Event emiited from Card object
+  this.events.on('checkCards', () => {
+    this.events.emit('cardsBlocked');
+  });
 
-
- //Event emiited from Card object
-  // this.events.on('checkCards', () => {
+  this.events.on('nextTry', () => {
+        this.shuffles += 5;
+        if(this.duration > 100){
+            this.duration -= 50;
+        }  
+        this.shuffleCards(this, this.shuffles, this.duration, [this.card, this.card2, this.card3]);
     
-  // });
+})
+
+
   
   
 

@@ -45,23 +45,36 @@ class Card extends Phaser.GameObjects.Sprite{
         this.cardFrontTexture = frame;
         //Added Tweens timeline to object properties
         this.shuffleTimeline = scene.tweens.createTimeline();
-        
+        this.setInteractive();
+        this.input.enabled = false;
 
-        // this.setInteractive()
+       
 
         this.on('pointerdown', function(pointer){
            if(this.cardColor == "red"){
-               console.log('U won');
-               this.flip();
-               
+               this.scene.game.events.emit('scorePoint');           
             }else{
-                console.log('U lose');   
-                this.flip();
                
             }
-
+            
             scene.events.emit('checkCards');
+            setTimeout(() => {
+                scene.events.emit('nextTry')
+            }, 2000)
         })
+
+        scene.events.on('cardsBlocked', () => {
+            // console.log(this.cardHidden);
+            this.flip();
+            this.input.enabled = false;
+            setTimeout(() => {
+                this.flip()
+            }, 1850);
+        })
+
+        
+
+        
     }
     //Function that changes position of card
     // cardPosition = 0,1,2
@@ -96,8 +109,18 @@ class Card extends Phaser.GameObjects.Sprite{
             x: cardMove,
             loop: 0,
             duration: duration,
+            onComplete: unlockCardsAfterShuffle,
         })
-    
+        
+        function unlockCardsAfterShuffle(){
+            if(GAME_OBJECT.shuffleTimeline.progress == 1){
+
+                GAME_OBJECT.shuffleTimeline = GAME_OBJECT.scene.tweens.createTimeline();
+                GAME_OBJECT.input.enabled = true;
+                
+            }
+        }
+
     }
 
 
