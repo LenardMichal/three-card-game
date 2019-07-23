@@ -4,6 +4,7 @@ import cardsImg from './assets/sprites.png';
 
 import UIScene from './scenes/uiScene';
 import GameScene from './scenes/gameScene';
+import RestartScene from './scenes/restartScene';
 
 const config = {
   type: Phaser.AUTO,
@@ -13,7 +14,8 @@ const config = {
   scene: [
     {preload, create},
     GameScene,
-    UIScene
+    UIScene,
+    RestartScene
   ]
 };
 
@@ -25,7 +27,7 @@ const game = new Phaser.Game(config);
   }
   function create(){
     this.scene.start('gameScene');
-    this.scene.launch('UIScene');
+    
     
   }
 

@@ -1,6 +1,6 @@
-import Phaser from 'phaser';
+import { Scene } from 'phaser';
 
-class UiScene extends Phaser.Scene{
+class UiScene extends Scene{
     constructor(){
         super('UIScene');
         this.score = 0;

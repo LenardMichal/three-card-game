@@ -1,6 +1,6 @@
-import Phaser from 'phaser';
+import { GameObjects } from 'phaser';
 
-class Card extends Phaser.GameObjects.Sprite{
+class Card extends GameObjects.Sprite {
     //Todo
     //card will get position 0,1,2 
     constructor(scene, position, color){
@@ -54,7 +54,7 @@ class Card extends Phaser.GameObjects.Sprite{
            if(this.cardColor == "red"){
                this.scene.game.events.emit('scorePoint');           
             }else{
-               
+              this.scene.game.events.emit('restartGame'); 
             }
             
             scene.events.emit('checkCards');
@@ -131,7 +131,7 @@ class Card extends Phaser.GameObjects.Sprite{
         let duration = 250;
         const GAME_OBJECT = this;
         
-        let flipTimeline = this.scene.tweens.createTimeline();
+        let flipTimeline = GAME_OBJECT.scene.tweens.createTimeline();
 
         flipTimeline.add({
             targets: GAME_OBJECT,
